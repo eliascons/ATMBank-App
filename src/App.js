@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+// React 
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+
+} from "react-router-dom";
+import {useState} from 'react';
+// Components
+import Home from './components/home';
+import About from './components/about';
+import NavBar from './components/navBar';
+import Register from './components/register';
+import Withdraw from './components/withdraw';
+import Deposit from './components/deposit';
+
+// Context
+import { UserContext } from './components/userContext';
 
 function App() {
+  
+  const initialState =  [{ name: 'Elias', email: 'eliasconsalvo@gmail.com', password: 'password' , balance: 0, userId: 0}]
+
+  const [users, setUsers] = useState(initialState);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+
+      <NavBar></NavBar>
+
+      <UserContext.Provider value={{users, setUsers}}>
+      
+        <Routes>
+          <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/about" element={<About></About>}></Route>
+          <Route path="/register" element={<Register></Register>}></Route>
+          <Route path="/deposit" element={<Deposit></Deposit>}></Route>
+          <Route path="/withdraw" element={<Withdraw></Withdraw>}></Route>
+        </Routes>
+
+      </UserContext.Provider>
+
+    </Router>
   );
 }
 
